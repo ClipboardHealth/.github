@@ -6,9 +6,9 @@ Summary
 -->
 
 Changes
-===
+---
 
 -
 
-Video/Screenshots
+Videos/screenshots
 ---
