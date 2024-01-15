@@ -9,7 +9,7 @@ on:
       - unlabeled
   pull_request_target:
     branches:
-      - main
+      - $default-branch
 jobs:
   pr-title:
     name: Validate PR title
