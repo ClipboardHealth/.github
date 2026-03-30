@@ -1,0 +1,29 @@
+name: Devin Attribution Check
+on:
+  pull_request:
+    types: [opened]
+
+jobs:
+  check-devin-attribution:
+    name: Devin Attribution Check
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    # Only run when the PR author is the Devin bot
+    if: github.event.pull_request.user.login == 'devin-ai-integration[bot]'
+    steps:
+      - name: Checkout .github repo
+        uses: actions/checkout@v4
+        with:
+          repository: ClipboardHealth/.github
+          sparse-checkout: scripts/devin-attribution-check.js
+          sparse-checkout-cone-mode: false
+
+      - name: Check attribution and notify requester
+        uses: actions/github-script@v7
+        env:
+          SLACK_TOKEN: ${{ secrets.SLACK_DEPLNOTIF_APP_TOKEN }}
+        with:
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          script: |
+            const script = require('./scripts/devin-attribution-check.js');
+            await script({ github, context, core });

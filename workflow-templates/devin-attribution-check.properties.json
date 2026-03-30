@@ -1,0 +1,6 @@
+{
+  "name": "Devin Attribution Check",
+  "description": "Notifies users via Slack when their Devin AI PR is authored by the bot account instead of their personal GitHub account.",
+  "iconName": "octicon alert",
+  "categories": ["Automation"]
+}
