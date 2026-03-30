@@ -93,7 +93,7 @@ async function postPrComment(github, context, requestedBy) {
 async function run({ github, context, core }) {
   // Step 1: Extract "Requested by: @username" from PR body
   const body = context.payload.pull_request.body || "";
-  const match = body.match(/Requested by:\s*@(\S+)/i);
+  const match = body.match(/Requested by:\s*@([A-Za-z0-9-]+)\b/i);
 
   if (!match) {
     core.info('No "Requested by: @username" found in PR body. Skipping.');

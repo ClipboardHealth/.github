@@ -267,6 +267,11 @@ describe("run", () => {
         body: "Some PR description\n\nRequested by: @myuser\nMore text",
         expected: "myuser",
       },
+      {
+        desc: "trailing punctuation stripped",
+        body: "Requested by: @someuser.",
+        expected: "someuser",
+      },
     ])("extracts username from $desc", async ({ body, expected }) => {
       const core = createMockCore();
       const github = createMockGithub({ email: null });

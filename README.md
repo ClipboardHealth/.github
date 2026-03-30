@@ -12,10 +12,10 @@ Automatically detects when a PR is authored by the `devin-ai-integration[bot]` a
 
 1. Extracts the requester's GitHub username from the `Requested by: @username` line in the PR body
 2. Looks up the requester's email via the GitHub API
-3. Sends them a Slack DM asking them to set up their Devin GitHub integration
-4. Falls back to a PR comment if the Slack lookup fails (e.g., no public email on GitHub profile)
+3. Posts a PR comment tagging the requester, asking them to set up their Devin GitHub integration
+4. Attempts to send a Slack DM to the requester (may fail if the user has no public email on their GitHub profile or the email doesn't match a Slack account)
 
-**Required secrets** (org-level): `SLACK_DEPLNOTIF_APP_TOKEN`, `SLACK_DEPLNOTIF_APP_SIGNING_SECRET`
+**Required secrets** (org-level): `SLACK_DEPLNOTIF_APP_TOKEN`
 
 **Enforcement:** Applied to all repositories via an organization-level ruleset. To configure or modify enforcement, go to **ClipboardHealth org Settings → Rulesets**.
 
