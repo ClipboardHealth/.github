@@ -1,0 +1,43 @@
+name: PR title
+
+on:
+  pull_request_target:
+    types:
+      - opened
+      - edited
+      - synchronize
+      - reopened
+
+permissions:
+  contents: read
+  pull-requests: read
+
+jobs:
+  validate:
+    name: Validate PR title
+    runs-on: ubuntu-latest
+    steps:
+      # Nx-generated release PRs keep their `chore(release): ...` title and are exempt.
+      - name: Reject titles with a scope
+        if: ${{ !startsWith(github.event.pull_request.title, 'chore(release):') }}
+        # amannn/action-semantic-pull-request v6.1.1
+        uses: amannn/action-semantic-pull-request@48f256284bd46cdaab1048c3721360e808335d50
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          # Override the default header regex to remove the `(scope)` group entirely,
+          # so any title containing a scope fails to match and is rejected.
+          headerPattern: '^(\w+)(\!)?: (.+)$'
+          headerPatternCorrespondence: type, breaking, subject
+          types: |
+            feat
+            fix
+            chore
+            docs
+            style
+            refactor
+            perf
+            test
+            build
+            ci
+            revert
